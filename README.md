@@ -12,11 +12,11 @@ Uma ferramenta grátis e opensource que integra a API da OpenAI© em interação
 
 ### 🌐 Conversational AI Web Interface
 
-Este projeto cria uma interface web interativa para conversar com o modelo de linguagem GPT-3.5-turbo da OpenAI usando Flask. É fácil de configurar e permite que você tenha um chatbot funcional no seu localhost.
+Este projeto cria uma interface webapp interativa para conversar com o modelo de linguagem GPT-3.5-turbo da OpenAI para fins de triagem de pacientes pós cirúrgicos ou diabéticos. Auxiliando no procedimento médico e diagnóstico hospitalar.
 
 ## 🚀 Começando
 
-Estas instruções fornecerão uma cópia do projeto em execução na sua máquina local para fins de desenvolvimento e teste.
+Estas instruções fornecerão uma cópia do projeto em execução na sua máquina local para fins de desenvolvimento e teste **APENAS!** (para ter acesso a ferramenta em sua última versão, acesse a aba ações ou o link abaixo).
 
 ### 📋 Pré-requisitos
 
