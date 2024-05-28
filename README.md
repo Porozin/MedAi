@@ -1,7 +1,9 @@
 # MedAi
+![Logo da ferramenta MedAi©](https://imgur.com/fbIi3hj)
+
 Uma ferramenta grátis e opensource que integra a API da OpenAI© em interação inteligente com IA para fins medicinais!
 
-Claro! Aqui está um exemplo de um README.md estiloso para o seu projeto:
+
 
 ```markdown
 # 🗨️ ChatGPT Web Interface
