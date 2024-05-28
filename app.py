@@ -1,36 +1,48 @@
-from flask import Flask, request, jsonify, render_template
 import openai
 import os
+import sys
 
-app = Flask(__name__)
-
-# Configure sua chave de API
+# Verifique se a chave de API está configurada
 openai.api_key = os.environ.get('OPENAI_API_KEY')
+if not openai.api_key:
+    sys.stderr.write("""
+    You haven't set up your API key yet.
+    
+    If you don't have an API key yet, visit:
+    
+    https://platform.openai.com/signup
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+    1. Make an account or sign in
+    2. Click "View API Keys" from the top right menu.
+    3. Click "Create new secret key"
 
-@app.route('/chat', methods=['POST'])
-def chat():
-    user_message = request.json.get('message')
-    if not user_message:
-        return jsonify({'error': 'No message provided'}), 400
+    Then, open the Secrets Tool and add OPENAI_API_KEY as a secret.
+    """)
+    exit(1)
 
-    messages = [
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": user_message}
-    ]
+# Função para interagir com o modelo
+def chat_with_model():
+    messages = [{"role": "system", "content": "You are a helpful assistant."}]
+    
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() in ['exit', 'quit']:
+            print("Ending the chat. Goodbye!")
+            break
 
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=messages
-        )
-        assistant_message = response['choices'][0]['message']['content']
-        return jsonify({'message': assistant_message})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        messages.append({"role": "user", "content": user_input})
 
-if __name__ == '__main__':
-    app.run(debug=True)
+        try:
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=messages
+            )
+            assistant_message = response['choices'][0]['message']['content']
+            print(f"Assistant: {assistant_message}")
+            messages.append({"role": "assistant", "content": assistant_message})
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+# Iniciar o chat
+if __name__ == "__main__":
+    chat_with_model()
