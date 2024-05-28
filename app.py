@@ -1,6 +1,7 @@
 import openai
 import os
 import sys
+os.system("pip install -r requirements.txt")
 
 # Verifique se a chave de API está configurada
 openai.api_key = os.environ.get('OPENAI_API_KEY')
