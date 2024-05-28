@@ -1,5 +1,5 @@
 # MedAi
-![Logo da ferramenta MedAi©](https://imgur.com/fbIi3hj)
+![Logo da ferramenta MedAi©](https://cdn.discordapp.com/attachments/833492504028381184/1245049771031531550/i-want-an-logo-for-an-tool-called-medai-a-tool-for-pHKzc4VIRn-y56gyrwOfsA-9IX80oJoQ7uabLZUsuqvnQ.jpeg?ex=66575675&is=665604f5&hm=99692af1f74fb2b208beeba27c6da2e4a35ad538a3ed9f686e117be426791460&)
 
 Uma ferramenta grátis e opensource que integra a API da OpenAI© em interação inteligente com IA para fins medicinais!
 
