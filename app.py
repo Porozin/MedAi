@@ -4,9 +4,9 @@ import os
 import unidecode
 import re
 
-app = Flask(__name__)
-@app.route("/") def hello(): return "Hello" if name == "main": app.run(host='0.0.0.0', port=9874)
-
+if __name__ == '__main__':
+  app.run(host='0.0.0.0', port=80)
+    
 # Configure sua chave de API
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 
