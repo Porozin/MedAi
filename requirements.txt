@@ -45,3 +45,4 @@ Werkzeug==3.0.3
 whatthepatch==1.0.3
 yapf==0.32.0
 yarl==1.9.4
+python-dotev==1.0.1
