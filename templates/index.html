@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedAI Chatbot</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1C1C36;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #chat-container {
+            width: 80%;
+            max-width: 800px;
+            background-color: #282846;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #logo {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+        #messages {
+            width: 100%;
+            height: 300px;
+            overflow-y: auto;
+            background-color: #3C3C6E;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+        .message {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .user-message {
+            background-color: #5E5ECB;
+            text-align: right;
+            color: #fff;
+        }
+        .assistant-message {
+            background-color: #2E3A87; /* Alterado para azul escuro */
+            text-align: left;
+            color: #fff;
+        }
+        .question-message {
+            background-color: #2E3A87; /* Alterado para azul escuro */
+            text-align: left;
+            color: #fff;
+        }
+        .conclusion-message {
+            background-color: #2E3A87; /* Alterado para azul escuro */
+            text-align: left;
+            color: #fff;
+        }
+        .assistant-image {
+            width: 30px; /* Defina o tamanho da imagem conforme necessário */
+            height: auto;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        #user-input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #5E5ECB;
+            border-radius: 10px;
+            background-color: #282846;
+            color: #fff;
+        }
+        #user-input:focus {
+            outline: none;
+            border-color: #7F7FEA;
+        }
+        #send-button {
+            padding: 10px 20px;
+            background-color: #5E5ECB;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #send-button:hover {
+            background-color: #7F7FEA;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <img id="logo" src="https://cdn.discordapp.com/attachments/833492504028381184/1245416230156763247/1717000723656.png?ex=6658abbf&is=66575a3f&hm=6606cff5ae9d5ca8ab8e5e199342a0677b147c3a8b303ac4a96bedec150f379d&" alt="MedAI - ChatBot Médico Inteligente 🧠">
+        <h1>MedAI - ChatBot Médico Inteligente 🧠</h1>
+        <div id="messages"></div>
+        <input type="text" id="user-input" placeholder="Digite sua mensagem...">
+        <button id="send-button" onclick="sendMessage()">Enviar</button>
+    </div>
+    <script>
+        let questionIndex = 0;
+        let additionalContext = [];
+        let responses = [];
+
+        function appendMessage(message, className, isAssistant = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message ' + className;
+
+            if (isAssistant) {
+                const img = document.createElement('img');
+                img.src = 'https://cdn.discordapp.com/attachments/833492504028381184/1245446055542390827/2_Sem_Titulo_20240529153723.png?ex=6658c786&is=66577606&hm=d47c647cf19ace388499cdea936a4223769934a85e14fd3e7944851db7b26c33&';
+                img.alt = 'Logo do MedAI';
+                img.className = 'assistant-image';
+                messageDiv.appendChild(img);
+            }
+
+            const textDiv = document.createElement('div');
+            textDiv.innerText = message;
+            messageDiv.appendChild(textDiv);
+
+            document.getElementById('messages').appendChild(messageDiv);
+            document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+        }
+
+        function sendMessage() {
+            const userInput = document.getElementById('user-input');
+            const message = userInput.value;
+            if (message.trim() === '') return;
+
+            appendMessage(`Usuário: ${message}`, 'user-message');
+            userInput.value = '';
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: message,
+                    question_index: questionIndex,
+                    additional_context: additionalContext,
+                    responses: responses
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    appendMessage(`Erro: ${data.error}`, 'error-message');
+                } else {
+                    if (data.next_question) {
+                        appendMessage(`MedAI: ${data.next_question}`, 'question-message', true);
+                    } else {
+                        appendMessage(`MedAI: ${data.message}`, 'conclusion-message', true);
+                    }
+                    questionIndex = data.question_index || questionIndex;
+                    additionalContext = data.additional_context || additionalContext;
+                    responses = data.responses || responses;
+                }
+            })
+            .catch(error => {
+                appendMessage(`Erro: ${error}`, 'error-message');
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    question_index: questionIndex,
+                    additional_context: additionalContext,
+                    responses: responses
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    appendMessage(`Erro: ${data.error}`, 'error-message');
+                } else {
+                    appendMessage(`MedAI: ${data.message}`, 'question-message', true);
+                    questionIndex = data.question_index || questionIndex;
+                    additionalContext = data.additional_context || additionalContext;
+                    responses = data.responses || responses;
+                }
+            })
+            .catch(error => {
+                appendMessage(`Erro: ${error}`, 'error-message');
+            });
+        });
+    </script>
+</body>
+</html>
