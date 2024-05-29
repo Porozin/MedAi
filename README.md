@@ -10,36 +10,30 @@ Uma ferramenta grátis e opensource que integra a API da OpenAI© em interação
 
 ![ChatGPT](https://upload.wikimedia.org/wikipedia/commons/4/4e/OpenAI_Logo.svg)
 
-### 🌐 Conversational AI Web Interface
-
+### 🌐 MedAi
 Este projeto cria uma interface webapp interativa para conversar com o modelo de linguagem GPT-3.5-turbo da OpenAI para fins de triagem de pacientes pós cirúrgicos ou diabéticos. Auxiliando no procedimento médico e diagnóstico hospitalar.
 
 ## 🚀 Começando
 
-Estas instruções fornecerão uma cópia do projeto em execução na sua máquina local para fins de desenvolvimento e teste **APENAS!** (para ter acesso a ferramenta em sua última versão, acesse a aba ações ou o link abaixo).
+Estas instruções fornecerão uma cópia do projeto em execução na sua máquina local para fins de desenvolvimento e teste **APENAS!** (para ter acesso a ferramenta em sua última versão, o link abaixo).
 
 ### 📋 Pré-requisitos
 
 Certifique-se de ter o Python 3.x instalado em sua máquina. Além disso, você precisará instalar as seguintes bibliotecas:
 
 ```bash
-pip install flask openai
+pip install flask openai==0.28
 ```
 
 ### 🔧 Instalação
 
 1. Clone este repositório:
     ```bash
-    git clone https://github.com/seu-usuario/chatgpt-web-interface.git
-    cd chatgpt-web-interface
+    git clone https://github.com/Porozin/MedAi
+    cd MedAi
     ```
 
-2. Instale as dependências necessárias:
-    ```bash
-    pip install flask openai
-    ```
-
-3. Configure sua chave de API da OpenAI. Adicione a chave de API às variáveis de ambiente:
+2. Configure sua chave de API da OpenAI. Adicione a chave de API às variáveis de ambiente:
     ```bash
     export OPENAI_API_KEY='sua_chave_de_api_aqui'
     ```
@@ -61,11 +55,12 @@ pip install flask openai
 │   └── index.html
 └── static
     └── styles.css
+    └── script.js
 ```
 
 - **app.py**: Arquivo principal do servidor Flask.
 - **templates/**: Diretório contendo o arquivo HTML.
-- **static/**: Diretório contendo os arquivos CSS.
+- **static/**: Diretório contendo os arquivos CSS e JS.
 
 
 ## 🛠️ Construído com
