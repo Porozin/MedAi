@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MedAI Chatbot</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'JetBrains Mono', monospace;
             background-color: #1C1C36;
+            background: linear-gradient(135deg, #1C1C36, #3C3C6E);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: #fff;
             display: flex;
             justify-content: center;
@@ -18,7 +22,7 @@
         #chat-container {
             width: 80%;
             max-width: 800px;
-            background-color: #282846;
+            background-color: rgba(40, 40, 70, 0.85); /* Fundo semi-transparente */
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
@@ -34,12 +38,13 @@
             width: 100%;
             height: 300px;
             overflow-y: auto;
-            background-color: #3C3C6E;
+            background-color: rgba(60, 60, 110, 0.85); /* Fundo semi-transparente */
             border: none;
             border-radius: 10px;
             padding: 10px;
             box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 10px;
+            position: relative;
         }
         .message {
             padding: 10px;
@@ -49,26 +54,42 @@
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.18);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            position: relative;
         }
         .user-message {
             background-color: #5E5ECB;
             text-align: right;
             color: #fff;
+            
         }
         .assistant-message {
-            background-color: #2E3A87; /* Alterado para azul escuro */
+            background-color: #2E3A87; /* Azul escuro */
             text-align: left;
             color: #fff;
         }
+        .assistant-message::after {
+            content: getCurrentTime();
+            position: absolute;
+            bottom: -20px;
+            right: 10px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8em;
+        }
         .question-message {
-            background-color: #2E3A87; /* Alterado para azul escuro */
+            background-color: #2E3A87; /* Azul escuro */
             text-align: left;
             color: #fff;
         }
         .conclusion-message {
-            background-color: #2E3A87; /* Alterado para azul escuro */
+            background-color: #2E3A87; /* Azul escuro */
             text-align: left;
             color: #fff;
+        }
+        .user-image {
+    width: 30px; /* Defina o tamanho da imagem conforme necessário */
+    height: auto;
+    margin-left: 10px; /* Alterado para margin-left para separar da esquerda */
+    vertical-align: middle;
         }
         .assistant-image {
             width: 30px; /* Defina o tamanho da imagem conforme necessário */
@@ -101,108 +122,224 @@
         #send-button:hover {
             background-color: #7F7FEA;
         }
+
+        /* Styles for login overlay */
+        #login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(28, 28, 54, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        #login-container {
+            background-color: rgba(40, 40, 70, 0.85);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s; /* Adiciona a animação de desvanecimento */
+        }
+        #login-logo {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+        #login-input {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #5E5ECB;
+            border-radius: 10px;
+            background-color: #282846;
+            color: #fff;
+        }
+        #login-input:focus {
+            outline: none;
+            border-color: #7F7FEA;
+        }
+        #login-button {
+            padding: 10px 20px;
+            background-color: #5E5ECB;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #login-button:hover {
+            background-color: #7F7FEA;
+        }
+
+        /* Animação de desvanecimento */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* JavaScript para obter a hora atual */
+        function getCurrentTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            return `${hours}:${minutes}`;
+        }
     </style>
 </head>
 <body>
-    <div id="chat-container">
-        <img id="logo" src="https://cdn.discordapp.com/attachments/833492504028381184/1245416230156763247/1717000723656.png?ex=6658abbf&is=66575a3f&hm=6606cff5ae9d5ca8ab8e5e199342a0677b147c3a8b303ac4a96bedec150f379d&" alt="MedAI - ChatBot Médico Inteligente 🧠">
-        <h1>MedAI - ChatBot Médico Inteligente 🧠</h1>
-        <div id="messages"></div>
-        <input type="text" id="user-input" placeholder="Digite sua mensagem...">
-        <button id="send-button" onclick="sendMessage()">Enviar</button>
+    <div id="login-overlay">
+    <div id="login-container">
+        <img id="login-logo" src="https://cdn.discordapp.com/attachments/833492504028381184/1245416230156763247/1717000723656.png?ex=6658abbf&is=66575a3f&hm=6606cff5ae9d5ca8ab8e5e199342a0677b147c3a8b303ac4a96bedec150f379d&" alt="MedAI - ChatBot Médico Inteligente 🧠">
+        <input type="text" id="login-input" placeholder="Digite seu nome...">
+        <button id="login-button" onclick="login()">Entrar</button>
     </div>
-    <script>
-        let questionIndex = 0;
-        let additionalContext = [];
-        let responses = [];
+</div>
 
-        function appendMessage(message, className, isAssistant = false) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message ' + className;
+<div id="chat-container">
+    <img id="logo" src="https://cdn.discordapp.com/attachments/833492504028381184/1245416230156763247/1717000723656.png?ex=6658abbf&is=66575a3f&hm=6606cff5ae9d5ca8ab8e5e199342a0677b147c3a8b303ac4a96bedec150f379d&" alt="MedAI - ChatBot Médico Inteligente 🧠">
+    <h1>MedAI - ChatBot Médico Inteligente 🧠</h1>
+    <div id="messages"></div>
+    <input type="text" id="user-input" placeholder="Digite sua mensagem...">
+    <button id="send-button" onclick="sendMessage()">Enviar</button>
+</div>
 
-            if (isAssistant) {
-                const img = document.createElement('img');
-                img.src = 'https://cdn.discordapp.com/attachments/833492504028381184/1245446055542390827/2_Sem_Titulo_20240529153723.png?ex=6658c786&is=66577606&hm=d47c647cf19ace388499cdea936a4223769934a85e14fd3e7944851db7b26c33&';
-                img.alt = 'Logo do MedAI';
-                img.className = 'assistant-image';
-                messageDiv.appendChild(img);
+<script>
+    let questionIndex = 0;
+    let additionalContext = [];
+    let responses = [];
+
+    function login() {
+        const userName = document.getElementById('login-input').value;
+        if (userName.trim() !== '') {
+            document.getElementById('login-overlay').style.animation = 'fadeOut 2s'; // Adiciona animação de desvanecimento
+            setTimeout(() => {
+                document.getElementById('login-overlay').style.display = 'none';
+            }, 2000); // Tempo de espera antes de esconder o login após o desvanecimento
+            // Aqui você pode armazenar o nome do usuário, se necessário
+            // Exemplo: sessionStorage.setItem('userName', userName);
+        } else {
+            alert('Por favor, insira seu nome.');
+        }
+    }
+
+    function appendMessage(message, className, isAssistant = false, typingEffect = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message ' + className;
+
+        if (isAssistant) {
+            const img = document.createElement('img');
+            img.src = 'https://cdn.discordapp.com/attachments/833492504028381184/1245416230156763247/1717000723656.png?ex=6658abbf&is=66575a3f&hm=6606cff5ae9d5ca8ab8e5e199342a0677b147c3a8b303ac4a96bedec150f379d&';
+            img.alt = 'Logo do MedAI';
+            img.className = 'assistant-image';
+            messageDiv.appendChild(img);
+        }
+        // Verifica se a mensagem é do usuário
+        const isUser = !isAssistant;
+
+        if (isUser) {
+            const img = document.createElement('img');
+            img.src = 'https://img.icons8.com/?size=100&id=ABBSjQJK83zf&format=png&color=2e3988'; // Novo link para a imagem do usuário
+            img.alt = 'Logo do usuário';
+            img.className = 'user-image'; // Alterado para o seletor de classe 'user-image'
+            messageDiv.appendChild(img);
+        }
+        const textDiv = document.createElement('div');
+        messageDiv.appendChild(textDiv);
+        document.getElementById('messages').appendChild(messageDiv);
+        document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+
+        if (typingEffect && isAssistant) {
+            let i = 0;
+            const speed = 50; // Velocidade de digitação (em milissegundos)
+            function typeWriter() {
+                if (i < message.length) {
+                    textDiv.innerHTML += message.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
             }
-
-            const textDiv = document.createElement('div');
+            typeWriter();
+        } else {
             textDiv.innerText = message;
-            messageDiv.appendChild(textDiv);
-
-            document.getElementById('messages').appendChild(messageDiv);
-            document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
         }
+    }
 
-        function sendMessage() {
-            const userInput = document.getElementById('user-input');
-            const message = userInput.value;
-            if (message.trim() === '') return;
+    function sendMessage() {
+        const userInput = document.getElementById('user-input');
+        const message = userInput.value;
+        if (message.trim() === '') return;
 
-            appendMessage(`Usuário: ${message}`, 'user-message');
-            userInput.value = '';
+        appendMessage(`Usuário: ${message}`, 'user-message');
+        userInput.value = '';
 
-            fetch('/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: message,
-                    question_index: questionIndex,
-                    additional_context: additionalContext,
-                    responses: responses
-                })
+        fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: message,
+                question_index: questionIndex,
+                additional_context: additionalContext,
+                responses: responses
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    appendMessage(`Erro: ${data.error}`, 'error-message');
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                appendMessage(`Erro: ${data.error}`, 'error-message');
+            } else {
+                if (data.next_question) {
+                    appendMessage(`MedAI: ${data.next_question}`, 'question-message', true, true);
                 } else {
-                    if (data.next_question) {
-                        appendMessage(`MedAI: ${data.next_question}`, 'question-message', true);
-                    } else {
-                        appendMessage(`MedAI: ${data.message}`, 'conclusion-message', true);
-                    }
-                    questionIndex = data.question_index || questionIndex;
-                    additionalContext = data.additional_context || additionalContext;
-                    responses = data.responses || responses;
+                    appendMessage(`MedAI: ${data.message}`, 'conclusion-message', true, true);
                 }
-            })
-            .catch(error => {
-                appendMessage(`Erro: ${error}`, 'error-message');
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    question_index: questionIndex,
-                    additional_context: additionalContext,
-                    responses: responses
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    appendMessage(`Erro: ${data.error}`, 'error-message');
-                } else {
-                    appendMessage(`MedAI: ${data.message}`, 'question-message', true);
-                    questionIndex = data.question_index || questionIndex;
-                    additionalContext = data.additional_context || additionalContext;
-                    responses = data.responses || responses;
-                }
-            })
-            .catch(error => {
-                appendMessage(`Erro: ${error}`, 'error-message');
-            });
+                questionIndex = data.question_index || questionIndex;
+                additionalContext = data.additional_context || additionalContext;
+                responses = data.responses || responses;
+            }
+        })
+        .catch(error => {
+            appendMessage(`Erro: ${error}`, 'error-message');
         });
-    </script>
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                question_index: questionIndex,
+                additional_context: additionalContext,
+                responses: responses
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                appendMessage(`Erro: ${data.error}`, 'error-message');
+            } else {
+                appendMessage(`MedAI: ${data.message}`, 'question-message', true, true);
+                questionIndex = data.question_index || questionIndex;
+                additionalContext = data.additional_context || additionalContext;
+                responses = data.responses || responses;
+            }
+        })
+        .catch(error => {
+            appendMessage(`Erro: ${error}`, 'error-message');
+        });
+    });
+</script>
 </body>
 </html>
