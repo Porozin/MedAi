@@ -3,7 +3,7 @@
 
 Uma ferramenta grátis e opensource que integra a API da OpenAI© em interação inteligente com IA para fins medicinais!
 
-
+![OpenAI](https://cdn.discordapp.com/attachments/833492504028381184/1245585414358568971/OpenAI_Logo.svg.png?ex=66594950&is=6657f7d0&hm=7b95e0adcbd40494d61a136d7a1d9235910e5953f09c0dd3272cd1b4c1ff6f09&)
 
 ```markdown
 # 🗨️ ChatBot Web com API da OpenAI
