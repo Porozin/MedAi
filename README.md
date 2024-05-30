@@ -1,5 +1,5 @@
 # MedAi
-![Logo da ferramenta MedAi©](https://cdn.discordapp.com/attachments/833492504028381184/1245049771031531550/i-want-an-logo-for-an-tool-called-medai-a-tool-for-pHKzc4VIRn-y56gyrwOfsA-9IX80oJoQ7uabLZUsuqvnQ.jpeg?ex=66575675&is=665604f5&hm=99692af1f74fb2b208beeba27c6da2e4a35ad538a3ed9f686e117be426791460&)
+![Logo da ferramenta MedAi©](https://cdn.discordapp.com/attachments/833492504028381184/1245446055542390827/2_Sem_Titulo_20240529153723.png?ex=66597046&is=66581ec6&hm=bbc987669dff2e29a7fcd30f0bf5a57462317850ee023a2dfad941dbcbe09faa&)
 
 Uma ferramenta grátis e opensource que integra a API da OpenAI© em interação inteligente com IA para fins medicinais!
 
@@ -16,6 +16,15 @@ Uma ferramenta grátis e opensource que integra a API da OpenAI© em interação
 
 ### 🌐 MedAi
 Este projeto cria uma interface webapp interativa para conversar com o modelo de linguagem GPT-3.5-turbo da OpenAI para fins de triagem de pacientes pós cirúrgicos ou diabéticos. Auxiliando no procedimento médico e diagnóstico hospitalar.
+
+## ⭐ Acesso a ferramenta
+
+> Nessa aba você terá acesso ao app nos respectivos links:
+
+>[WebSite](https://bit.ly/3V0m1QR)
+
+>[Apk do app](https://www.webintoapp.com/store/352170)
+
 
 ## 🚀 Começando
 
