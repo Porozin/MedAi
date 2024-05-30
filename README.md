@@ -21,7 +21,7 @@ Este projeto cria uma interface webapp interativa para conversar com o modelo de
 
 > Nessa aba você terá acesso ao app nos respectivos links:
 
->[WebSite](https://bit.ly/3V0m1QR)
+>[WebSite](https://a6e88d89-1eeb-409b-8ebf-110a2ca58beb-00-3agvfnpfnyzsd.riker.replit.dev:5000/)
 
 >[Apk do app](https://www.webintoapp.com/store/352170)
 
