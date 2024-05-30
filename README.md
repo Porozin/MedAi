@@ -52,7 +52,7 @@ pip install flask openai==0.28
 ## 🖥️ Estrutura do Projeto
 
 ```
-/chatgpt-web-interface
+/MedAi
 │
 ├── app.py
 ├── templates
