@@ -8,7 +8,7 @@ Uma ferramenta grátis e opensource que integra a API da OpenAI© em interação
 ```markdown
 # 🗨️ ChatBot Web com API da OpenAI
 
-![OpenAI](https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg)
+![OpenAI](https://cdn.discordapp.com/attachments/833492504028381184/1245585414358568971/OpenAI_Logo.svg.png?ex=66594950&is=6657f7d0&hm=7b95e0adcbd40494d61a136d7a1d9235910e5953f09c0dd3272cd1b4c1ff6f09&)
 
 ### 🌐 MedAi
 Este projeto cria uma interface webapp interativa para conversar com o modelo de linguagem GPT-3.5-turbo da OpenAI para fins de triagem de pacientes pós cirúrgicos ou diabéticos. Auxiliando no procedimento médico e diagnóstico hospitalar.
