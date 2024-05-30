@@ -4,6 +4,11 @@
 Uma ferramenta grátis e opensource que integra a API da OpenAI© em interação inteligente com IA para fins medicinais!
 
 
+# 🔥 SneakPeaks:
+![MedAi Publish](https://cdn.discordapp.com/attachments/833492504028381184/1245599449779142687/4_Sem_Titulo_20240530014445.jpg?ex=66595662&is=665804e2&hm=52da10db8a9f40d627f45b2c7c5ee7afb0e8cc0be2d5848e32e9fe5cc9b44192&)
+
+└─ snapshot.jpg
+![snpsht](https://cdn.discordapp.com/attachments/833492504028381184/1245599450370412564/4_Sem_Titulo_20240530014614.jpg?ex=66595663&is=665804e3&hm=385d143903b7bb942571a1f620f8cac4cd6137e54a5b513180e746bdf22e4472&)
 
 # 🗨️ ChatBot Web com API da OpenAI
 
