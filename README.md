@@ -5,7 +5,7 @@ Uma ferramenta grátis e opensource que integra a API da OpenAI© em interação
 
 
 # 🔥 SneakPeaks:
-![MedAi Publish](2_Sem_Titulo_20240529153723.png)
+![MedAi Publish](logopng.png)
 
 └─ snapshot.jpg
 ![snpsht](4_Sem_Titulo_20240530014445.jpg)
