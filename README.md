@@ -5,10 +5,8 @@ Uma ferramenta grátis e opensource que integra a API da OpenAI© em interação
 
 
 # 🔥 SneakPeaks:
-![MedAi Publish](logopng.png)
-
 └─ snapshot.jpg
-![snpsht](4_Sem_Titulo_20240530014445.jpg)
+![snpsht](4_Sem_Titulo_20240530014614.jpg)
 
 # 🗨️ ChatBot Web com API da OpenAI
 
